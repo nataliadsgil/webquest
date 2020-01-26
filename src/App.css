@@ -9,20 +9,79 @@ html, body, #root {
 
 .area-game {
   background: #fff;
+  height: 500px;
+  border-radius: 10px;
 }
 
 .container-word {
   display: flex;
   flex-direction: row;
+  background-color: #c4c4c4;
+  height: 75px;
 }
 
 .letter{
   padding: 10px;
-  border: solid 1px #000;
   width: 40px;
   height: 40px;
   text-align: center;
   line-height: 40px;
   font-size: 25px;
-  margin: 5px;
+  margin: 8px 5px;
+  background-color: #fff;
+  font-weight: bolder;
+  color: #555;
+}
+
+.menu-bar{
+  background: #D95383;
+  height: 50px;
+}
+
+h1 {
+  text-align: center;
+}
+
+.time{
+  width: 100%;
+  margin-top: -23px;
+}
+
+.seconds, .steps, .lifes {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: #F5F5F5;
+  height: 50px;
+}
+
+.seconds span, .steps h3 {
+  font-weight: bolder;
+  line-height: 50px;
+  margin: 0;
+  color: #555;
+}
+
+.life-icons {
+  margin: 12px 3px;
+  color: #CD5757;
+}
+
+.modal {
+  background: #fff;
+  width: 50%;
+  margin: 15% auto;
+  padding: 10px 20px 25px 20px;
+  border: none;
+  outline: none;
+  border-radius: 10px;
+  align-items: center;
+  justify-content: center;
+  color: #555;
+  text-align: center;
+}
+
+.modal .continue-button {
+  background-color: #D95383;
+  color: #fff;
 }

@@ -1,15 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   TextField,
-  Grid
+  Grid,
+  LinearProgress,
+  withStyles,
+  lighten,
+  Modal,
+  Button
  } from '@material-ui/core/';
+
 import './App.css';
+
+import {
+  Favorite as FavoriteIcon} from '@material-ui/icons/';
+
 
 function App() {
   
+  const BorderLinearProgress = withStyles({
+    root: {
+      height: 10,
+      backgroundColor: lighten('#4EC059', 0.8)
+    },
+    bar: {
+      borderRadius: 20,
+      backgroundColor: '#4EC059'
+    },
+  })(LinearProgress);
+
   const [word, setWord] = useState('')
   const [arrayLetter, setArrayLetter] = useState([])
   const [index, setIndex] = useState(0)
+  const [color, setColor] = useState('#555')
+  const [time, setTime] = useState(0)
+  const [timer, setTimer] = useState(null)
+  const [count, setCount] = useState(0)
+  const [lifes, setLifes] = useState(3)
   
   const questWords = [
     {word: "red", translate: "vermelho"},
@@ -26,33 +52,159 @@ function App() {
     {word: "cian", translate: "ciano"}
   ]
 
-  function updateWord(word) {
+  async function updateWord(word) {
     if(word.split("").length <= 8){
       setWord(word)
       setArrayLetter(word.split(""))
 
       if(word === questWords[index].translate){
-        setIndex(index + 1)
-        setWord('')
-        setArrayLetter([])
+        
+        setColor('#4EC059')
+        clearInterval(timer)
+        setTime(0)
+
+        await setTimeout(() => {
+          console.log("here")
+          nextWord()
+        }, 1000)
+        
       }
     }
   }
 
+  function timeExceded(){
+      handleOpen()
+  }
+
+  function nextWord() {
+    setOpen(false)
+    let add = index + 1
+    console.log(add)
+    setIndex(add)
+    setWord('')
+    setArrayLetter([])
+    setColor('#555');
+    initTimer()
+  }
+
+  function initTimer() {
+
+    let total = 0;
+    let seconds = 0;
+    let myCount = 0;
+
+    setTimer(setInterval(() => {
+      total += 0.01*100/5
+      seconds++;
+      setTime(total)
+
+      if(seconds >= 99){
+        myCount += 1;
+        setCount(myCount)
+        seconds = 0;
+      }
+
+    }, 10))
+  }
+
+  useEffect(
+    () => {
+      if(time >= 99){
+        return () => {
+          clearInterval(timer)
+          setTime(0)
+        }
+      }
+      else{
+        return
+      }
+    }, [time, timer]
+  )
+
+
+  useEffect(
+    () => {
+      initTimer()
+    }, []
+  )
+
+  function getModalStyle() {
+    const top = 50;
+    const left = 50;
+
+    return {
+      top: `${top}%`,
+      left: `${left}%`,
+      transform: `translate(-${top}%, -${left}%)`,
+    };
+  }
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+
   return (
     <>
     <Grid container item direction="row" justify="center">
+
+      <Modal
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+        open={open}
+        onClose={handleClose}
+      >
+        <div className="modal">
+          <h2 id="simple-modal-title">Tempo Esgotado!</h2>
+          <p id="simple-modal-description">
+            A palavra correta era:
+          </p>
+          <h3>{questWords[index].translate}</h3>
+          <Button classes={{root: 'continue-button'}} onClick={nextWord}>Continuar</Button>
+        </div>
+      </Modal>
+
+      <Grid container item direction="row" className="menu-bar" md={12}>DSADASD</Grid>
       <Grid 
         className="area-game"
         container
         item
         direction="row"
         justify="center"
-        md={8}>
-        
-        <Grid container item md={12} justify="center">
-          <h1>{questWords[index].word}</h1>
+        md={8}
+        style={{marginTop: '30px'}}>
+
+          <Grid container item direction="row" justify="center" md={12}>
+            <Grid md={3} classes={{root: 'seconds'}}>
+              <span>{count} segundos</span>
+            </Grid>
+            
+            <Grid md={6} classes={{root: 'steps'}}>
+              <h3>{index}/{questWords.length}</h3>
+            </Grid>
+
+            <Grid md={3} classes={{root: 'lifes'}}>
+              <FavoriteIcon classes={{root: 'life-icons'}}/>
+              <FavoriteIcon classes={{root: 'life-icons'}}/>
+              <FavoriteIcon classes={{root: 'life-icons'}}/>
+            </Grid>
+           
+            <BorderLinearProgress variant="determinate" className="time" value={time} />
+          </Grid>
+
+
+
+        <Grid container item md={12} justify="center" direction="column">
+          <h1>Traduza:</h1>
+          <h1 style={{color: color}}>{questWords[index].word}</h1>
         </Grid>
+        
 
           <Grid container item md={12} justify="center">
         <div className="container-word">
