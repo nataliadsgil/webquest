@@ -16,7 +16,7 @@ html, body, #root {
 .container-word {
   display: flex;
   flex-direction: row;
-  background-color: #c4c4c4;
+  /*background-color: #c4c4c4;*/
   height: 75px;
 }
 
@@ -31,6 +31,7 @@ html, body, #root {
   background-color: #fff;
   font-weight: bolder;
   color: #555;
+  border: solid 5px #c4c4c4;
 }
 
 .menu-bar{

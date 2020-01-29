@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { Provider } from 'react-redux'
+import store from './store'
 import { 
-  TextField,
   Grid,
   LinearProgress,
   withStyles,
@@ -8,6 +9,10 @@ import {
   Modal,
   Button
  } from '@material-ui/core/';
+
+import Test from './Test'
+import TypedWord from './components/TypedWord'
+import Question from './components/Question'
 
 import './App.css';
 
@@ -35,7 +40,7 @@ function App() {
   const [time, setTime] = useState(0)
   const [timer, setTimer] = useState(null)
   const [count, setCount] = useState(0)
-  const [lifes, setLifes] = useState(3)
+  //const [lifes, setLifes] = useState(3)
   
   const questWords = [
     {word: "red", translate: "vermelho"},
@@ -63,7 +68,7 @@ function App() {
         clearInterval(timer)
         setTime(0)
 
-        await setTimeout(() => {
+        setTimeout(() => {
           console.log("here")
           nextWord()
         }, 1000)
@@ -113,6 +118,7 @@ function App() {
         return () => {
           clearInterval(timer)
           setTime(0)
+          timeExceded()
         }
       }
       else{
@@ -128,17 +134,6 @@ function App() {
     }, []
   )
 
-  function getModalStyle() {
-    const top = 50;
-    const left = 50;
-
-    return {
-      top: `${top}%`,
-      left: `${left}%`,
-      transform: `translate(-${top}%, -${left}%)`,
-    };
-  }
-
   const [open, setOpen] = React.useState(false);
 
   const handleOpen = () => {
@@ -151,7 +146,7 @@ function App() {
 
 
   return (
-    <>
+    <Provider store={store}>
     <Grid container item direction="row" justify="center">
 
       <Modal
@@ -200,26 +195,15 @@ function App() {
 
 
 
-        <Grid container item md={12} justify="center" direction="column">
-          <h1>Traduza:</h1>
-          <h1 style={{color: color}}>{questWords[index].word}</h1>
-        </Grid>
-        
+        <Question/>
+          
+        <TypedWord/>
 
-          <Grid container item md={12} justify="center">
-        <div className="container-word">
-            {arrayLetter.map(letter => (
-              <div className="letter">{letter}</div>
-            ))}
-        </div>
-        </Grid>
-        <TextField 
-          value={word}
-          onChange={(e) => updateWord(e.target.value)}></TextField>
       </Grid>
     </Grid>
-    </>
+    </Provider>
   );
 }
+
 
 export default App;
