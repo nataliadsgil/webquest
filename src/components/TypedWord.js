@@ -6,8 +6,8 @@ import {
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as typedwordActions from '../actions/typedword'
-import * as questionsActions from '../actions/questions'
-import * as wordindexActions from '../actions/wordindex'
+import * as questionActions from '../actions/question'
+import * as resultActions from '../actions/result'
 
 class TypedWord extends Component {
 
@@ -28,6 +28,10 @@ class TypedWord extends Component {
 	      this.setState({arrayLetter: word.split("")})
 
 	      this.props.typeWord(word)
+
+	      if(word == this.props.question.translate){
+	      	this.props.userWin()
+	      }
 	    }
   	}
 
@@ -51,14 +55,16 @@ class TypedWord extends Component {
 }
 
 const mapStateToProps = state => ({
-	questions: state.questions,
-	wordindex: state.wordindex
+	question: state.question,
+	wordindex: state.wordindex,
+	result: state.result
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators(
 {
 	...typedwordActions,
-	...questionsActions
+	...questionActions,
+	...resultActions
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(TypedWord)

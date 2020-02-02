@@ -1,4 +1,4 @@
-export default function questions(state = '', action) {
+export default function question(state = {}, action) {
 	
 	const questions = [
 		    {word: "red", translate: "vermelho"},

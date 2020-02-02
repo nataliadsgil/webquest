@@ -1,10 +1,12 @@
 import { combineReducers } from 'redux'
 import typedword from './typedword'
-import questions from './questions'
+import question from './question'
 import wordindex from './wordindex'
+import result from './result'
 
 export default combineReducers({
 	typedword,
-	questions,
-	wordindex
+	question,
+	wordindex,
+	result
 })
