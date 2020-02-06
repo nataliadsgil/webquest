@@ -10,10 +10,8 @@ import * as questionActions from '../actions/question'
 
 class Question extends Component { 
 	constructor(props) {
-	  super(props);
-	
+	  	super(props);
 		this.props.getQuestion(this.props.wordindex)
-
 	}
 
 	getQuestion = () => {

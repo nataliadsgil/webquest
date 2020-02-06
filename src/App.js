@@ -13,6 +13,7 @@ import {
 import Test from './Test'
 import TypedWord from './components/TypedWord'
 import Question from './components/Question'
+import Timer from './components/Timer'
 
 import './App.css';
 
@@ -37,8 +38,6 @@ function App() {
   const [arrayLetter, setArrayLetter] = useState([])
   const [index, setIndex] = useState(0)
   const [color, setColor] = useState('#555')
-  const [time, setTime] = useState(0)
-  const [timer, setTimer] = useState(null)
   const [count, setCount] = useState(0)
   //const [lifes, setLifes] = useState(3)
   
@@ -58,7 +57,7 @@ function App() {
   ]
 
   async function updateWord(word) {
-    if(word.split("").length <= 8){
+    /*if(word.split("").length <= 8){
       setWord(word)
       setArrayLetter(word.split(""))
 
@@ -74,7 +73,7 @@ function App() {
         }, 1000)
         
       }
-    }
+    }*/
   }
 
   function timeExceded(){
@@ -89,30 +88,12 @@ function App() {
     setWord('')
     setArrayLetter([])
     setColor('#555');
-    initTimer()
+    //initTimer()
   }
 
-  function initTimer() {
+  
 
-    let total = 0;
-    let seconds = 0;
-    let myCount = 0;
-
-    setTimer(setInterval(() => {
-      total += 0.01*100/5
-      seconds++;
-      setTime(total)
-
-      if(seconds >= 99){
-        myCount += 1;
-        setCount(myCount)
-        seconds = 0;
-      }
-
-    }, 10))
-  }
-
-  useEffect(
+  /*useEffect(
     () => {
       if(time >= 99){
         return () => {
@@ -125,14 +106,10 @@ function App() {
         return
       }
     }, [time, timer]
-  )
+  )*/
 
 
-  useEffect(
-    () => {
-      initTimer()
-    }, []
-  )
+  
 
   const [open, setOpen] = React.useState(false);
 
@@ -190,7 +167,7 @@ function App() {
               <FavoriteIcon classes={{root: 'life-icons'}}/>
             </Grid>
            
-            <BorderLinearProgress variant="determinate" className="time" value={time} />
+           <Timer/> 
           </Grid>
 
 
