@@ -10,6 +10,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 import * as timeActions from '../actions/time'
+import * as modalActions from '../actions/modal'
 
 const BorderLinearProgress = withStyles({
     root: {
@@ -41,8 +42,12 @@ class Timer extends Component {
 
 	componentDidUpdate() {
 		if(this.props.time >= 100) {
+
 			clearInterval(this.state.timer)
-			this.props.returnZero()
+
+			setTimeout(() => {
+				this.props.openModal()
+			}, 1000)
 		}
 	}
 
@@ -73,6 +78,7 @@ const mapStateToProps = state => ({
 	time: state.time
 })
 
-const mapDispatchToProps = dispatch => bindActionCreators(timeActions, dispatch)
+const mapDispatchToProps = dispatch => bindActionCreators({
+	...timeActions, ...modalActions}, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(Timer);

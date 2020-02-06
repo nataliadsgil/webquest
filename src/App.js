@@ -14,6 +14,7 @@ import Test from './Test'
 import TypedWord from './components/TypedWord'
 import Question from './components/Question'
 import Timer from './components/Timer'
+import TimeoutModal from './components/TimeoutModal'
 
 import './App.css';
 
@@ -77,19 +78,9 @@ function App() {
   }
 
   function timeExceded(){
-      handleOpen()
+//      handleOpen()
   }
 
-  function nextWord() {
-    setOpen(false)
-    let add = index + 1
-    console.log(add)
-    setIndex(add)
-    setWord('')
-    setArrayLetter([])
-    setColor('#555');
-    //initTimer()
-  }
 
   
 
@@ -109,38 +100,12 @@ function App() {
   )*/
 
 
-  
-
-  const [open, setOpen] = React.useState(false);
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
 
   return (
     <Provider store={store}>
     <Grid container item direction="row" justify="center">
 
-      <Modal
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
-        open={open}
-        onClose={handleClose}
-      >
-        <div className="modal">
-          <h2 id="simple-modal-title">Tempo Esgotado!</h2>
-          <p id="simple-modal-description">
-            A palavra correta era:
-          </p>
-          <h3>{questWords[index].translate}</h3>
-          <Button classes={{root: 'continue-button'}} onClick={nextWord}>Continuar</Button>
-        </div>
-      </Modal>
+      <TimeoutModal/>
 
       <Grid container item direction="row" className="menu-bar" md={12}>DSADASD</Grid>
       <Grid 
