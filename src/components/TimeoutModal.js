@@ -10,6 +10,7 @@ import { connect } from 'react-redux'
 import * as modalActions from '../actions/modal'
 import * as wordIndexActions from '../actions/wordindex'
 import * as questionActions from '../actions/question'
+import * as timeActions from '../actions/time'
 
 class TimeoutModal extends Component {
 	constructor(props) {
@@ -33,7 +34,8 @@ class TimeoutModal extends Component {
 	    this.props.nextWord()
 
 	    setTimeout(() => {
-	    	this.props.getQuestion(this.props.wordindex)	    	
+	    	this.props.getQuestion(this.props.wordindex)
+	    	this.props.returnZero()	    	
 	    }, 1000)
 	    //let add = index + 1
 	    //console.log(add)
@@ -72,6 +74,6 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-	...modalActions, ...wordIndexActions, ...questionActions}, dispatch)
+	...modalActions, ...wordIndexActions, ...questionActions, ...timeActions}, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(TimeoutModal)
