@@ -15,3 +15,15 @@ export function userPlaying() {
 		type: 'PLAY'
 	}
 }
+
+export function userComplete() {
+	return {
+		type: 'COMPLETE'
+	}
+}
+
+export function userFail() {
+	return {
+		type: 'FAIL'
+	}
+}

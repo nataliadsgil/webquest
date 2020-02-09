@@ -6,6 +6,10 @@ export default function result(state = "PLAY", action) {
 			return "WIN"
 		case 'USER_LOSE':
 			return "LOSE"
+		case 'COMPLETE':
+			return "COMPLETE"
+		case 'FAIL':
+			return "FAIL"
 		default:
 			return state
 	}

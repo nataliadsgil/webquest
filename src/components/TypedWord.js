@@ -13,8 +13,15 @@ class TypedWord extends Component {
 
 	constructor(props) {
 	  super(props);
-	
-	 console.log(props)
+	}
+
+	componentDidUpdate(prevProps, prevState) {
+		
+		if(this.props.result === "WIN" && prevProps.result === "PLAY") {
+			setTimeout(() => {
+				this.setState({arrayLetter: [], word: ''})	
+			}, 1000)
+		}
 	}
 	
 	state = {

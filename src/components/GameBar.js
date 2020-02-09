@@ -11,6 +11,29 @@ import * as timeActions from '../actions/time'
 
 var seconds = 0;
 
+const Lifes = (props) => {
+
+	let lifes = [];
+	let total_vidas = props.lifes;
+
+
+	for(let i = 0; i < 3; i++) {
+		if(total_vidas != 0){
+			lifes.push(<FavoriteIcon classes={{root: 'life-icons'}}/>)
+			total_vidas--
+		}
+		else{
+			lifes.push(<FavoriteIcon classes={{root: 'no-life-icons'}}/>)
+		}		
+	}
+
+	return (
+		<Grid md={3} classes={{root: 'lifes'}}>
+          {lifes}
+        </Grid>
+	)
+}
+
 class GameBar extends Component {
 	constructor(props) {
 	  super(props);
@@ -49,11 +72,7 @@ class GameBar extends Component {
               <h3>{(this.props.wordindex + 1)}/12</h3>
             </Grid>
 
-            <Grid md={3} classes={{root: 'lifes'}}>
-              <FavoriteIcon classes={{root: 'life-icons'}}/>
-              <FavoriteIcon classes={{root: 'life-icons'}}/>
-              <FavoriteIcon classes={{root: 'life-icons'}}/>
-            </Grid>
+            <Lifes lifes={this.props.life} />
            
            <Timer/> 
           </Grid>
@@ -64,7 +83,8 @@ class GameBar extends Component {
 const mapStateToProps = state => ({
 	time: state.time,
 	wordindex: state.wordindex,
-	question: state.question
+	question: state.question,
+	life: state.life
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators(timeActions, dispatch)

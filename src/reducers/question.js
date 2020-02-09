@@ -16,8 +16,13 @@ export default function question(state = {}, action) {
 		]
 
 	switch(action.type) {
-		case 'GET_QUESTION': 
-			return questions[action.index]
+		case 'GET_QUESTION':
+			if(action.index < questions.length) {
+				return questions[action.index]	
+			}
+			else {
+				return state
+			}
 		default:
 			return state
 	}

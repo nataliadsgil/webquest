@@ -1,4 +1,4 @@
-import React, { Component, useEffect } from 'react'
+import React, { Component } from 'react'
 import { 
   Grid
  } from '@material-ui/core/';
@@ -7,6 +7,7 @@ import { connect } from 'react-redux'
 
 import * as typedwordActions from '../actions/typedword'
 import * as questionActions from '../actions/question'
+import * as wordIndexActions from '../actions/wordindex'
 
 class Question extends Component { 
 	constructor(props) {
@@ -16,6 +17,25 @@ class Question extends Component {
 
 	getQuestion = () => {
 		return this.props.getQuestion(this.props.wordindex)
+	}
+
+	componentDidUpdate() {
+		if(this.props.result == "WIN" && this.state.color == "#555") {
+			this.userWin()
+		}
+
+		if(this.props.result == "PLAY" && this.state.color == "#4EC059") {
+			this.setState({color: "#555"})
+		}
+	}
+
+	userWin = async () => {
+		this.setState({color: "#4EC059"})
+		
+		setTimeout( async () => {
+			await this.props.nextWord()
+			this.props.getQuestion(this.props.wordindex)
+		}, 1000)
 	}
 
 	state = {
@@ -52,12 +72,14 @@ class Question extends Component {
 const mapStateToProps = state => ({
 	typedword: state.typedword,
 	question: state.question,
-	wordindex: state.wordindex
+	wordindex: state.wordindex,
+	result: state.result
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators(
 	{
 		...typedwordActions,
-		...questionActions }, dispatch)
+		...questionActions,
+		...wordIndexActions }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(Question)

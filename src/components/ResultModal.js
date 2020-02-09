@@ -7,62 +7,52 @@ import {
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
-import * as modalActions from '../actions/modal'
 import * as wordIndexActions from '../actions/wordindex'
 import * as questionActions from '../actions/question'
 import * as timeActions from '../actions/time'
 import * as resultActions from '../actions/result'
 import * as lifeActions from '../actions/life'
 
-class TimeoutModal extends Component {
+class ResultModal extends Component {
 	constructor(props) {
 	  super(props);
 	
-	  this.state = {};
+	  this.state = {
+	  	open: false,
+	  	title: "Completo",
 
-	  console.log(props)
+	  };
 	}
 
-	componentDidUpdate() {
-		if(this.props.result == "LOSE") {
+	componentDidUpdate(prevProps, prevState) {
+		if(this.props.life === 0 && prevProps.life === 1) {
 			this.handleOpen()
-		}
-		else if(this.props.result == "PLAY") {
-			this.handleClose()
+			this.userFail()
 		}
 	}
 
 	handleOpen = () => {
-	    this.props.openModal()
+	   	this.setState({open: true})
 	};
 
 	handleClose = () => {
-	    this.props.closeModal()
+	    this.setState({open: false})
 	};
-
-	nextWord = async () => {
-	    this.props.userPlaying()
-	    await this.props.nextWord()
-	    this.props.getQuestion(this.props.wordindex)
-	    this.props.returnZero()
-	    this.props.removeLife()    	
-  	}
 
 	render() {
 		return (
 			<Modal
 	        aria-labelledby="simple-modal-title"
 	        aria-describedby="simple-modal-description"
-	        open={this.props.modal}
+	        open={this.state.open}
 	        onClose={this.handleClose}
 	      >
 	        <div className="modal">
-	          <h2 id="simple-modal-title">Tempo Esgotado!</h2>
+	          <h2 id="simple-modal-title">{this.state.title}</h2>
 	          <p id="simple-modal-description">
-	            A palavra correta era:
+	            Texto aleatória aqui dentro
 	          </p>
-	          <h3>{this.props.question.translate}</h3>
-	          <Button classes={{root: 'continue-button'}} onClick={this.nextWord}>Continuar</Button>
+	          <Button classes={{root: 'continue-button'}}>Continuar</Button>
 	        </div>
 	      </Modal>
 		)
@@ -70,15 +60,14 @@ class TimeoutModal extends Component {
 }
 
 const mapStateToProps = state => ({
-	modal: state.modal,
 	question: state.question,
 	wordindex: state.wordindex,
-	result: state.result
+	result: state.result,
+	life: state.life
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators(
 	{	
-		...modalActions,
 		...wordIndexActions, 
 		...questionActions, 
 		...timeActions, 
@@ -86,4 +75,4 @@ const mapDispatchToProps = dispatch => bindActionCreators(
 		...lifeActions
 	}, dispatch)
 
-export default connect(mapStateToProps, mapDispatchToProps)(TimeoutModal)
+export default connect(mapStateToProps, mapDispatchToProps)(ResultModal)

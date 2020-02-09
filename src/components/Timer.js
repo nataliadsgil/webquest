@@ -12,6 +12,9 @@ import { connect } from 'react-redux'
 import * as timeActions from '../actions/time'
 import * as modalActions from '../actions/modal'
 import * as resultActions from '../actions/result'
+import * as wordIndexActions from '../actions/wordindex'
+import * as questionActions from '../actions/question'
+
 
 const BorderLinearProgress = withStyles({
     root: {
@@ -49,26 +52,44 @@ class Timer extends Component {
 	}
 
 	componentDidUpdate(prevProps, prevState) {
-		if(this.props.time >= 100) {
 
-			this.stopTimer()
-
+		//Tempo excedido
+		if(this.props.time >= 100 && prevProps.time < 100) {
 			this.timeExceded()
+		}
+
+		if(this.props.result === "WIN" && prevProps.result === "PLAY") {
+			console.log("result agora: ", this.props.result)
+			console.log("result antes: ", prevProps.result)
+			this.stopTimer()
+			this.userWin()
 		}
 
 		if(this.props.result == "PLAY" && this.props.time == 0 && timer == null) {
 			setTimeout(() => {
 				this.initTimer()	
-			}, 1000)
+			}, 100)
 		}
 
 	}
 
-	timeExceded = async () => {
+	userWin = async () => {
+		await this.props.returnZero()
 		await setTimeout(() => {
-			if(this.props.result == "PLAY" && this.props.time >= 100) {
-				this.props.userLose()
-			}	
+			this.props.userPlaying()
+						console.log("VENCEU")
+
+			//this.props.nextWord()
+		    //this.props.getQuestion(this.props.wordindex)
+			
+		}, 1000)
+	}
+
+	timeExceded = async () => {
+		this.stopTimer()
+		setTimeout(() => {
+			this.props.userLose()	
+			console.log("PERDEU")
 		}, 1000)
 	}
 
@@ -99,10 +120,11 @@ class Timer extends Component {
 
 const mapStateToProps = state => ({
 	time: state.time,
-	result: state.result
+	result: state.result,
+	wordindex: state.wordindex
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-	...timeActions, ...modalActions, ...resultActions}, dispatch)
+	...timeActions, ...modalActions, ...resultActions, ...wordIndexActions, ...questionActions}, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(Timer);
