@@ -11,6 +11,7 @@ import { connect } from 'react-redux'
 
 import * as timeActions from '../actions/time'
 import * as modalActions from '../actions/modal'
+import * as resultActions from '../actions/result'
 
 const BorderLinearProgress = withStyles({
     root: {
@@ -23,6 +24,11 @@ const BorderLinearProgress = withStyles({
     },
   })(LinearProgress);
 
+
+var stop = false
+var timer = null
+
+
 class Timer extends Component {
 	constructor(props) {
 	  super(props);
@@ -30,8 +36,10 @@ class Timer extends Component {
 	  this.state = {
 	  	time: 0,
 		timer: null,
-		count: 0
+		count: 0,
+		stop: false
 	  };
+
 
 	  console.log("TIMER: ", props);
 	}
@@ -40,15 +48,28 @@ class Timer extends Component {
 	   this.initTimer()
 	}
 
-	componentDidUpdate() {
+	componentDidUpdate(prevProps, prevState) {
 		if(this.props.time >= 100) {
 
-			clearInterval(this.state.timer)
+			this.stopTimer()
 
+			this.timeExceded()
+		}
+
+		if(this.props.result == "PLAY" && this.props.time == 0 && timer == null) {
 			setTimeout(() => {
-				this.props.openModal()
+				this.initTimer()	
 			}, 1000)
 		}
+
+	}
+
+	timeExceded = async () => {
+		await setTimeout(() => {
+			if(this.props.result == "PLAY" && this.props.time >= 100) {
+				this.props.userLose()
+			}	
+		}, 1000)
 	}
 
 	initTimer = () => {
@@ -57,13 +78,15 @@ class Timer extends Component {
 		let seconds = 0;
 		let myCount = 0;
 
-		this.setState({timer: setInterval(() => {
+		timer = setInterval(() => {
+			total = 100 * 0.1 / 5
+		  	this.props.increaseTime(total)
+		}, 100)
+	}
 
-		  total = 100 * 0.1 / 5
-
-		  this.props.increaseTime(total)
-
-		}, 100)})
+	stopTimer = async () => {
+		await clearInterval(timer)
+		timer = null
 	}
 
 
@@ -75,10 +98,11 @@ class Timer extends Component {
 }
 
 const mapStateToProps = state => ({
-	time: state.time
+	time: state.time,
+	result: state.result
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-	...timeActions, ...modalActions}, dispatch)
+	...timeActions, ...modalActions, ...resultActions}, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(Timer);

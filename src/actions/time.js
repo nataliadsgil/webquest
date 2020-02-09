@@ -10,3 +10,9 @@ export function returnZero() {
 		type: 'RETURN_ZERO'
 	}
 }
+
+export function returnSeconds() {
+	return {
+		type: 'RETURN_SECONDS'
+	}
+}

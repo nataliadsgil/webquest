@@ -15,6 +15,7 @@ import TypedWord from './components/TypedWord'
 import Question from './components/Question'
 import Timer from './components/Timer'
 import TimeoutModal from './components/TimeoutModal'
+import GameBar from './components/GameBar'
 
 import './App.css';
 
@@ -117,23 +118,8 @@ function App() {
         md={8}
         style={{marginTop: '30px'}}>
 
-          <Grid container item direction="row" justify="center" md={12}>
-            <Grid md={3} classes={{root: 'seconds'}}>
-              <span>{count} segundos</span>
-            </Grid>
-            
-            <Grid md={6} classes={{root: 'steps'}}>
-              <h3>{index}/{questWords.length}</h3>
-            </Grid>
-
-            <Grid md={3} classes={{root: 'lifes'}}>
-              <FavoriteIcon classes={{root: 'life-icons'}}/>
-              <FavoriteIcon classes={{root: 'life-icons'}}/>
-              <FavoriteIcon classes={{root: 'life-icons'}}/>
-            </Grid>
-           
-           <Timer/> 
-          </Grid>
+          
+          <GameBar/>
 
 
 
