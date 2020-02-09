@@ -22,6 +22,12 @@ class TypedWord extends Component {
 				this.setState({arrayLetter: [], word: ''})	
 			}, 1000)
 		}
+
+		if(this.props.result === "LOSE" && prevProps.result === "PLAY") {
+			setTimeout(() => {
+				this.setState({arrayLetter: [], word: ''})	
+			}, 1000)
+		}
 	}
 	
 	state = {

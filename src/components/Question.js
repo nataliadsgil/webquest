@@ -8,6 +8,7 @@ import { connect } from 'react-redux'
 import * as typedwordActions from '../actions/typedword'
 import * as questionActions from '../actions/question'
 import * as wordIndexActions from '../actions/wordindex'
+import * as resultActions from '../actions/result'
 
 class Question extends Component { 
 	constructor(props) {
@@ -19,7 +20,7 @@ class Question extends Component {
 		return this.props.getQuestion(this.props.wordindex)
 	}
 
-	componentDidUpdate() {
+	componentDidUpdate(prevProps, prevState) {
 		if(this.props.result == "WIN" && this.state.color == "#555") {
 			this.userWin()
 		}
@@ -80,6 +81,7 @@ const mapDispatchToProps = dispatch => bindActionCreators(
 	{
 		...typedwordActions,
 		...questionActions,
-		...wordIndexActions }, dispatch)
+		...wordIndexActions,
+		...resultActions }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(Question)

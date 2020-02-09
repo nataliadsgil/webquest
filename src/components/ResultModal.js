@@ -13,6 +13,42 @@ import * as timeActions from '../actions/time'
 import * as resultActions from '../actions/result'
 import * as lifeActions from '../actions/life'
 
+const ContentModal = (props) => {
+
+	if(props.data == "COMPLETE") {
+		return (
+			<div className="modal">
+				<h1>:)</h1>
+	          <h2 id="simple-modal-title">Parabéns!</h2>
+	          <p id="simple-modal-description">
+	            Muito bem! Você completou esta fase.
+	          </p>
+
+	          <h3>Vamos continuar?</h3>
+	          <Button classes={{root: 'continue-button'}}>PRÓXIMA FASE</Button>
+	        </div>
+		)
+	}
+	
+	if(props.data == "FAIL") {
+		return (
+			<div className="modal">
+				<h1>:(</h1>
+	          <h2 id="simple-modal-title">Ah não!</h2>
+	          <p id="simple-modal-description">
+	            Parece que você precisa praticar mais, mas tudo bem!
+	          </p>
+
+	          <h3>Não desista!</h3>
+	          <Button classes={{root: 'continue-button'}}>TENTAR NOVAMENTE</Button>
+	        </div>
+		)
+	}
+
+	console.log("PROPS: ", props.data)
+
+}	
+
 class ResultModal extends Component {
 	constructor(props) {
 	  super(props);
@@ -27,7 +63,12 @@ class ResultModal extends Component {
 	componentDidUpdate(prevProps, prevState) {
 		if(this.props.life === 0 && prevProps.life === 1) {
 			this.handleOpen()
-			this.userFail()
+			this.props.userFail()
+		}
+
+		if(this.props.wordindex === 12 && prevProps.wordindex === 11) {
+			this.handleOpen()
+			this.props.userComplete()
 		}
 	}
 
@@ -47,13 +88,7 @@ class ResultModal extends Component {
 	        open={this.state.open}
 	        onClose={this.handleClose}
 	      >
-	        <div className="modal">
-	          <h2 id="simple-modal-title">{this.state.title}</h2>
-	          <p id="simple-modal-description">
-	            Texto aleatória aqui dentro
-	          </p>
-	          <Button classes={{root: 'continue-button'}}>Continuar</Button>
-	        </div>
+	        <ContentModal data={this.props.result}/>
 	      </Modal>
 		)
 	}

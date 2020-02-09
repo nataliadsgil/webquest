@@ -65,10 +65,17 @@ class Timer extends Component {
 			this.userWin()
 		}
 
+		if((this.props.result === "FAIL" || this.props.result === "COMPLETE") && prevProps.result === "PLAY") {
+			setTimeout(() => {
+				this.props.returnZero()
+				this.stopTimer()
+			}, 1000)
+		}
+
 		if(this.props.result == "PLAY" && this.props.time == 0 && timer == null) {
 			setTimeout(() => {
 				this.initTimer()	
-			}, 100)
+			}, 500)
 		}
 
 	}
@@ -76,12 +83,9 @@ class Timer extends Component {
 	userWin = async () => {
 		await this.props.returnZero()
 		await setTimeout(() => {
-			this.props.userPlaying()
-						console.log("VENCEU")
-
-			//this.props.nextWord()
-		    //this.props.getQuestion(this.props.wordindex)
-			
+			if(this.props.result != "COMPLETE") {
+				this.props.userPlaying()
+			}			
 		}, 1000)
 	}
 

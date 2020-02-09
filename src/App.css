@@ -27,11 +27,12 @@ html, body, #root {
   text-align: center;
   line-height: 40px;
   font-size: 25px;
-  margin: 8px 5px;
+  margin: 8px -2.5px;
   background-color: #fff;
   font-weight: bolder;
   color: #555;
   border: solid 5px #c4c4c4;
+  text-transform: uppercase;
 }
 
 .menu-bar{
@@ -93,3 +94,8 @@ h1 {
   background-color: #D95383;
   color: #fff;
 }
+
+.modal .continue-button:hover {
+  background-color: #C84272;
+}
+
