@@ -6,6 +6,7 @@ import result from './result'
 import time from './time'
 import modal from './modal'
 import life from './life'
+import levels from './levels'
 
 export default combineReducers({
 	typedword,
@@ -14,5 +15,6 @@ export default combineReducers({
 	result,
 	time,
 	modal,
-	life
+	life,
+	levels
 })

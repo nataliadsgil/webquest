@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Provider } from 'react-redux'
-import store from './store'
 import { 
   Grid,
   LinearProgress,
@@ -17,6 +15,7 @@ import Timer from './components/Timer'
 import TimeoutModal from './components/TimeoutModal'
 import GameBar from './components/GameBar'
 import ResultModal from './components/ResultModal'
+import MainBar from './components/MainBar'
 
 import './App.css';
 
@@ -28,16 +27,14 @@ function App() {
   
  
   return (
-    <Provider store={store}>
     <Grid container item direction="row" justify="center">
 
       <TimeoutModal/>
 
       <ResultModal/>
 
-      <Grid container item direction="row" className="menu-bar" md={12}>
-        <h1 style={{lineHeight: "5px", marginLeft: '20px', color: '#fff'}}>Traduja</h1>
-      </Grid>
+      <MainBar/>
+
       <Grid 
         className="area-game"
         container
@@ -58,7 +55,6 @@ function App() {
 
       </Grid>
     </Grid>
-    </Provider>
   );
 }
 

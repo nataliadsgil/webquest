@@ -6,32 +6,34 @@ import {
 
 import './ListLevels.css'
 
+import MainBar from './components/MainBar'
+
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+
 class ListLevels extends Component {
 	constructor(props) {
 	  super(props);
 	
 	  this.state = {};
+
+	  console.log(props)
 	}
 
 	render() {
 		return (
 			<Grid container item direction="row" justify="center">
-		      <Grid container item direction="row" className="menu-bar" md={12}>
-		        <h1 style={{lineHeight: "5px", marginLeft: '20px', color: '#fff'}}>Traduja</h1>
-		      </Grid>
-		      	
-		      	<Grid container item direction="row" justify="center" md={10}>
-		      		<Grid container item md={2} justify="center" classes={{root: 'level-card'}}>Cores</Grid>
-		      		<Grid container item md={2} justify="center" classes={{root: 'level-card'}}>Frutas</Grid>
-		      		<Grid container item md={2} justify="center" classes={{root: 'level-card'}}>Animais</Grid>
-		      		<Grid container item md={2} justify="center" classes={{root: 'level-card'}}>Lugares</Grid>
-		      		<Grid container item md={2} justify="center" classes={{root: 'level-card'}}>Objetos</Grid>
+		     	
+		     	<MainBar/>
 
-		      		<Grid container item md={2} justify="center" classes={{root: 'level-card'}}>Adjetivos</Grid>
-		      		<Grid container item md={2} justify="center" classes={{root: 'level-card'}}>Coletivos</Grid>
-		      		<Grid container item md={2} justify="center" classes={{root: 'level-card'}}>Superlativos</Grid>
-		      		<Grid container item md={2} justify="center" classes={{root: 'level-card'}}>Advérbios de Tempo</Grid>
-		      		<Grid container item md={2} justify="center" classes={{root: 'level-card'}}>Advérbios de Intensidade</Grid>
+		      	<Grid container item direction="row" justify="center" md={8} style={{marginTop: '30px'}}>
+		      		{this.props.levels.map(level => (
+		      			<Grid container item md={3} justify="center" alignItems='center' classes={{root: 'level-card'}} direction="column" >
+			      			<span class="title-level">{level.name}</span>
+			      			<span class="qtd-questions">{level.qtdWords}</span>
+			      			<span class="simple-text">Palavras</span>
+			      		</Grid>
+		      		))}	
 		      	</Grid>
 
 		    </Grid>
@@ -39,4 +41,8 @@ class ListLevels extends Component {
 	}
 }
 
-export default ListLevels
+const mapStateToProps = state => ({
+	levels: state.levels
+})
+
+export default connect(mapStateToProps, null)(ListLevels)
