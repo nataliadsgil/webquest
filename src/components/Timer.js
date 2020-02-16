@@ -48,7 +48,7 @@ class Timer extends Component {
 	}
 	
 	componentDidMount() {
-	   this.initTimer()
+	   //this.initTimer()
 	}
 
 	componentDidUpdate(prevProps, prevState) {
@@ -58,7 +58,7 @@ class Timer extends Component {
 			this.timeExceded()
 		}
 
-		if(this.props.result === "WIN" && prevProps.result === "PLAY") {
+		if(this.props.result === "WIN" && (prevProps.result === "PLAY" || prevProps.result === "INIT")) {
 			console.log("result agora: ", this.props.result)
 			console.log("result antes: ", prevProps.result)
 			this.stopTimer()
@@ -76,6 +76,11 @@ class Timer extends Component {
 			setTimeout(() => {
 				this.initTimer()	
 			}, 500)
+		}
+
+		//Comando para iniciar o jogo
+		if(this.props.result == "INIT" && prevProps.result == "PLAY") {
+			this.initTimer()
 		}
 
 	}

@@ -1,5 +1,7 @@
 export default function result(state = "PLAY", action) {
 	switch(action.type) {
+		case 'INIT':
+			return "INIT"
 		case 'PLAY':
 			return "PLAY"
 		case 'USER_WIN': 

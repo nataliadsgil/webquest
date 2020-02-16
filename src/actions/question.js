@@ -1,6 +1,8 @@
-export function getQuestion(index) {
+export function getQuestion(index, array) {
+	console.log(array)
 	return {
 		type: 'GET_QUESTION',
-		index: index
+		index: index,
+		array: array
 	}
 }

@@ -17,7 +17,7 @@ class TypedWord extends Component {
 
 	componentDidUpdate(prevProps, prevState) {
 		
-		if(this.props.result === "WIN" && prevProps.result === "PLAY") {
+		if(this.props.result === "WIN" && (prevProps.result === "PLAY" || prevProps.result === "INIT")) {
 			setTimeout(() => {
 				this.setState({arrayLetter: [], word: ''})	
 			}, 1000)
@@ -36,16 +36,16 @@ class TypedWord extends Component {
 	}
 
 	updateWord = (word) => {
-	    if(word.split("").length <= 8){
+	    //if(word.split("").length <= 10){
 	      this.setState({word: word})
 	      this.setState({arrayLetter: word.split("")})
 
 	      this.props.typeWord(word)
 
-	      if(word == this.props.question.translate){
+	      if(word.trim() == this.props.question.answer.toLowerCase().trim()){
 	      	this.props.userWin()
 	      }
-	    }
+	    //}
   	}
 
 	render(){
@@ -61,6 +61,7 @@ class TypedWord extends Component {
 
 	        <TextField 
           value={this.state.word}
+          classes={{root: 'input-text'}}
           onChange={(e) => this.updateWord(e.target.value)}></TextField>
           </>
 		)

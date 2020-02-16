@@ -27,3 +27,9 @@ export function userFail() {
 		type: 'FAIL'
 	}
 }
+
+export function userInit() {
+	return {
+		type: 'INIT'
+	}
+}

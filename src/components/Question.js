@@ -10,14 +10,34 @@ import * as questionActions from '../actions/question'
 import * as wordIndexActions from '../actions/wordindex'
 import * as resultActions from '../actions/result'
 
+import api from '../services/api'
+
 class Question extends Component { 
 	constructor(props) {
 	  	super(props);
-		this.props.getQuestion(this.props.wordindex)
+		
+		this.state = {
+			questions: [],
+			color: '#555'
+		}
 	}
 
-	getQuestion = () => {
-		return this.props.getQuestion(this.props.wordindex)
+	getAllQuestions = async () => {
+		const response = await api.get('/question/' + this.props.currentLevel.item._id)
+
+		if(response.status == 200) {
+			if(response.data){
+				this.setState({questions: response.data})
+				this.props.getQuestion(this.props.wordindex, response.data)
+			}	
+		}
+	}
+
+	componentDidMount() {
+		console.log(this.props)
+
+		this.getAllQuestions()
+
 	}
 
 	componentDidUpdate(prevProps, prevState) {
@@ -28,6 +48,10 @@ class Question extends Component {
 		if(this.props.result == "PLAY" && this.state.color == "#4EC059") {
 			this.setState({color: "#555"})
 		}
+
+		if(this.props.result === "PLAY" && prevProps.result === "LOSE") {
+			this.props.getQuestion(this.props.wordindex, this.state.questions)
+		}
 	}
 
 	userWin = async () => {
@@ -35,7 +59,7 @@ class Question extends Component {
 		
 		setTimeout( async () => {
 			await this.props.nextWord()
-			this.props.getQuestion(this.props.wordindex)
+			this.props.getQuestion(this.props.wordindex, this.state.questions)
 		}, 1000)
 	}
 
@@ -61,9 +85,9 @@ class Question extends Component {
 	render(){
 		return(
 			<Grid container item md={12} justify="center" direction="column">
-	          <h1>Traduza:</h1>
+	          <h1>{this.props.currentLevel.item.mainQuestion}</h1>
 	          <h1 style={{color: this.state.color}}>
-	          	{this.props.question.word}
+	          	{this.props.question.text}
 	          </h1>
 	        </Grid>
 		)
@@ -74,7 +98,8 @@ const mapStateToProps = state => ({
 	typedword: state.typedword,
 	question: state.question,
 	wordindex: state.wordindex,
-	result: state.result
+	result: state.result,
+	currentLevel: state.currentLevel
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators(

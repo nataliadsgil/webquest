@@ -43,7 +43,6 @@ class TimeoutModal extends Component {
 	nextWord = async () => {
 	    this.props.userPlaying()
 	    await this.props.nextWord()
-	    this.props.getQuestion(this.props.wordindex)
 	    this.props.returnZero()
 	    this.props.removeLife()    	
   	}

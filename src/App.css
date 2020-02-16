@@ -49,6 +49,14 @@ h1 {
   margin-top: -23px;
 }
 
+.progress{
+  width: 100%;
+}
+
+.bar-progress {
+  background-color: #4EC059
+}
+
 .seconds, .steps, .lifes {
   align-items: center;
   justify-content: center;
@@ -97,5 +105,25 @@ h1 {
 
 .modal .continue-button:hover {
   background-color: #C84272;
+}
+
+
+div.secondary-bar{
+  background-color: #fff;
+  padding: 10px 0;
+}
+
+img.coin {
+  width: 35px;
+  height: 35px;
+  margin: 0 5px;
+}
+
+img.coin svg {
+  width: 100%;
+}
+
+.input-text {
+  text-transform: uppercase;
 }
 

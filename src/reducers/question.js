@@ -17,8 +17,8 @@ export default function question(state = {}, action) {
 
 	switch(action.type) {
 		case 'GET_QUESTION':
-			if(action.index < questions.length) {
-				return questions[action.index]	
+			if(action.index < action.array.length) {
+				return action.array[action.index]	
 			}
 			else {
 				return state

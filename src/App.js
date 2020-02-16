@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Component } from 'react';
 import { 
   Grid,
   LinearProgress,
@@ -16,6 +16,10 @@ import TimeoutModal from './components/TimeoutModal'
 import GameBar from './components/GameBar'
 import ResultModal from './components/ResultModal'
 import MainBar from './components/MainBar'
+import InitModal from './components/InitModal'
+
+
+import coin from './coin.svg'
 
 import './App.css';
 
@@ -23,39 +27,58 @@ import {
   Favorite as FavoriteIcon} from '@material-ui/icons/';
 
 
-function App() {
+class App extends Component {
+
+  constructor(props) {
+    super(props);
   
- 
-  return (
-    <Grid container item direction="row" justify="center">
+    this.state = {};
+  }
+  
+ render() {
+    return (
+      <Grid container item direction="row" justify="center">
 
-      <TimeoutModal/>
+        <InitModal/>
 
-      <ResultModal/>
+        <TimeoutModal/>
 
-      <MainBar/>
+        <ResultModal/>
 
-      <Grid 
-        className="area-game"
-        container
-        item
-        direction="row"
-        justify="center"
-        md={8}
-        style={{marginTop: '30px'}}>
+        <MainBar/>
 
-          
-          <GameBar/>
+        <Grid container item md={12} classes={{root: 'secondary-bar'}}>
+          <Grid container item md={4} alignItems="center" justify="center" >Nível 01</Grid>
+          <Grid container item md={4}></Grid>
+          <Grid container item md={4} alignItems="center" justify="center">
+            <img src={coin} className="coin" />
+            20
+          </Grid>
+        </Grid>
+
+        <Grid 
+          className="area-game"
+          container
+          item
+          direction="row"
+          justify="center"
+          md={8}
+          style={{marginTop: '30px'}}>
+
+            
+            <GameBar/>
 
 
 
-        <Question/>
-          
-        <TypedWord/>
+          <Question/>
+            
+          <TypedWord/>
 
+        </Grid>
       </Grid>
-    </Grid>
-  );
+    );
+ }
+
 }
 
 
